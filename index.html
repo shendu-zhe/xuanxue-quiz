@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="theme-color" content="#15102b">
+<title>测一测，你是哪种玄学体质</title>
+<meta name="description" content="10 道题，看看老天爷给你发的是哪种剧本。">
+<style>
+  :root{
+    --pink:#f0c56a;
+    --pink-d:#e0a94a;
+    --ink:#f5f0e8;
+    --ink-2:#a79dc6;
+    --card:#211a3c;
+    --line:#332a55;
+    --bg1:#15102b;
+    --bg2:#0f0b1f;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    color:var(--ink);
+    background:radial-gradient(120% 70% at 50% 0%,#2a1f52 0%,var(--bg1) 45%,var(--bg2) 100%);
+    min-height:100vh;-webkit-font-smoothing:antialiased;
+  }
+  .app{max-width:480px;margin:0 auto;padding:calc(24px + env(safe-area-inset-top)) 20px calc(28px + env(safe-area-inset-bottom));}
+  .screen{display:none;animation:fade .32s ease both}
+  .screen.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#f0c56a;background:rgba(240,197,106,.13);padding:7px 14px;border-radius:999px;font-weight:600;letter-spacing:.04em}
+  h1{font-size:31px;line-height:1.34;margin:20px 0 0;font-weight:800;letter-spacing:-.01em}
+  h1 em{font-style:normal;color:var(--pink);position:relative;white-space:nowrap}
+  h1 em::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:9px;background:rgba(240,197,106,.22);border-radius:4px;z-index:-1}
+  .sub{margin:14px 0 0;font-size:16px;line-height:1.7;color:var(--ink-2)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 0}
+  .chip{font-size:13.5px;color:#bdb2d8;background:rgba(255,255,255,.035);border:1px solid var(--line);padding:8px 13px;border-radius:12px}
+  .chip b{color:#f0c56a;font-weight:700}
+  .cta{display:block;width:100%;border:0;cursor:pointer;margin-top:30px;padding:18px 20px;border-radius:18px;font-size:18px;font-weight:800;color:#20170a;background:linear-gradient(135deg,#f6d68f,#e3a942);box-shadow:0 12px 30px rgba(230,180,80,.25);transition:transform .12s ease,box-shadow .12s ease}
+  .cta:active{transform:translateY(2px) scale(.995);box-shadow:0 6px 16px rgba(230,180,80,.2)}
+  .tiny{margin:16px 0 0;text-align:center;font-size:12.5px;color:#6f6790;line-height:1.6}
+  .topbar{display:flex;align-items:center;justify-content:space-between;font-size:13px;color:var(--ink-2)}
+  .track{height:7px;background:rgba(255,255,255,.07);border-radius:999px;margin:12px 0 30px;overflow:hidden}
+  .track > i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#b39a6a,#f0c56a);transition:width .35s cubic-bezier(.4,0,.2,1)}
+  .qnum{font-size:14px;font-weight:800;color:var(--pink);letter-spacing:.08em}
+  .qtext{font-size:23px;line-height:1.5;font-weight:800;margin:10px 0 26px;letter-spacing:-.01em}
+  .opts{display:flex;flex-direction:column;gap:12px}
+  .opt{text-align:left;width:100%;cursor:pointer;background:var(--card);border:1.5px solid #2c2450;border-radius:16px;padding:17px 18px;font-size:16.5px;line-height:1.45;color:var(--ink);font-weight:500;transition:border-color .15s ease,transform .1s ease,background .15s ease}
+  .opt:active{transform:scale(.985);border-color:var(--pink);background:#2a2150}
+  .opt.picked{border-color:var(--pink);background:rgba(240,197,106,.1)}
+  .resLabel{font-size:13px;font-weight:700;color:var(--ink-2);letter-spacing:.16em}
+  .resName{font-size:34px;font-weight:900;line-height:1.24;margin:10px 0 8px;letter-spacing:-.02em;color:var(--pink)}
+  .resTag{font-size:16.5px;font-weight:700;color:#c8bcdf;line-height:1.6;margin:0}
+  .social{display:none;margin:10px 0 0;font-size:13.5px;color:var(--ink-2)}
+  .social b{color:var(--pink);font-weight:800}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin:20px 0 0}
+  .card h3{margin:0 0 10px;font-size:14px;letter-spacing:.08em;color:var(--ink-2);font-weight:700}
+  .desc{margin:0;font-size:16px;line-height:1.85;color:#ded6ef}
+  .heat{display:flex;align-items:baseline;gap:8px}
+  .heat b{font-size:44px;font-weight:900;color:var(--pink);letter-spacing:-.02em;line-height:1}
+  .heat i{font-style:normal;font-size:14px;color:var(--ink-2)}
+  .bars{display:flex;flex-direction:column;gap:13px;margin-top:6px}
+  .bar .row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px;color:#c3b8dd}
+  .bar .row span:last-child{font-weight:800;color:var(--pink-d)}
+  .bar .bg{height:9px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden}
+  .bar .bg > i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#8f7a4e,#f0c56a);transition:width .9s cubic-bezier(.2,.8,.2,1)}
+  .btn2{display:block;width:100%;border:1.5px solid var(--pink);cursor:pointer;margin-top:14px;padding:15px;border-radius:16px;font-size:16px;font-weight:800;color:var(--pink);background:transparent;transition:background .15s ease}
+  .btn2:active{background:rgba(240,197,106,.1)}
+  .btnGhost{border-color:#3a3160;color:var(--ink-2)}
+  .foot{margin:22px 0 0;text-align:center;font-size:12px;color:#615a80;line-height:1.7}
+  .toast{position:fixed;left:50%;bottom:38px;transform:translate(-50%,20px);background:rgba(245,240,232,.95);color:#1a1430;font-size:14px;padding:11px 18px;border-radius:12px;opacity:0;pointer-events:none;transition:.25s ease;z-index:9;font-weight:600}
+  .toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <section class="screen active" id="s-cover">
+    <div class="badge">✦ 10 道题 · 约 1 分钟</div>
+    <h1>测一测，你是哪种<em>玄学体质</em></h1>
+    <p class="sub">凭你的 10 个下意识反应，<br>看看老天爷给你发的是哪种剧本。</p>
+    <div class="chips">
+      <div class="chip"><b>玄学信任</b>｜你信到什么程度</div>
+      <div class="chip"><b>直觉强度</b>｜感觉准不准</div>
+      <div class="chip"><b>转运执念</b>｜你为好运做过什么</div>
+      <div class="chip"><b>嘴硬程度</b>｜嘴上说不信，手很诚实</div>
+    </div>
+    <button class="cta" id="start">开始测试 →</button>
+    <p class="tiny">纯本地计算 · 不收集任何信息<br>本测试仅供娱乐，不构成任何预测或建议</p>
+  </section>
+
+  <section class="screen" id="s-quiz">
+    <div class="topbar"><span id="qidx">第 1 / 10 题</span><span id="qpct">0%</span></div>
+    <div class="track"><i id="bar"></i></div>
+    <div class="qnum" id="qnum">Q1</div>
+    <h2 class="qtext" id="qtext">题目</h2>
+    <div class="opts" id="opts"></div>
+  </section>
+
+  <section class="screen" id="s-result">
+    <div class="resLabel">你的玄学体质</div>
+    <h1 class="resName" id="rname">—</h1>
+    <p class="resTag" id="rtag"></p>
+    <p class="social" id="rsocial"></p>
+    <div class="card">
+      <h3>你身上那点“说不清”</h3>
+      <p class="desc" id="rdesc"></p>
+    </div>
+    <div class="card">
+      <h3>玄学浓度</h3>
+      <div class="heat"><b id="rheat">0</b><i>%</i></div>
+      <div class="bars" id="rbars"></div>
+    </div>
+    <button class="btn2" id="share">复制结果，发给朋友 →</button>
+    <button class="btn2 btnGhost" id="again">再测一次</button>
+    <p class="foot">答案只在你手机里算，不上传任何信息<br>结果图个乐，别拿它替你做决定</p>
+  </section>
+
+</div>
+<div class="toast" id="toast">已复制</div>
+
+<script>
+const TYPES = {
+  lucky: {
+    name: "锦鲤附体型",
+    tag: "随便点个外卖，都能中个免单。",
+    desc: "你身上有一种没法解释的顺：排哪队哪队快，赶哪班哪班不晚，抽奖总是能中个小的。你本人不太敢把这叫好运，怕说出来就没了。其实这种体质最珍贵的不是运气本身，是你一直相信“事情会往好的方向走”——这个信念往往真的会把事情变好。"
+  },
+  retro: {
+    name: "水逆常驻型",
+    tag: "只要我出门，天就开始下雨。",
+    desc: "你身上有一台很准的倒霉雷达：关键时刻手机没电、排到你前面刚好卖完、刚洗完车就下雨。你不是真的运气差，你只是记性好——倒霉的事记得特别清楚，顺利的事反而忘了。下次试试反过来记，你可能早就是锦鲤了。"
+  },
+  half: {
+    name: "半信半疑型",
+    tag: "嘴上说不信，塔罗一抽就当真。",
+    desc: "你有一套完整的唯物主义世界观，和一颗会在凌晨两点搜“水逆什么时候结束”的心。你不需要别人说服你，你需要的是一个允许自己“信一下”的场合。这没什么可羞耻的——人本来就需要一些说不清的东西，来安放说不清的情绪。"
+  },
+  skeptic: {
+    name: "玄学绝缘型",
+    tag: "算命的说我好，我说他骗钱。",
+    desc: "你是那种听完成绩还要看算法的人。星座、塔罗、黄历，在你眼里都是一套概率游戏加心理暗示。你不信，但你也确实在别人转发锦鲤的时候，偷偷希望它有用。你的理性是真诚的，你的那点动摇也是真诚的。"
+  },
+  night: {
+    name: "深夜求签型",
+    tag: "白天唯物主义，凌晨两点看星座。",
+    desc: "你的一天分成两半：白天你效率很高、逻辑清晰、什么都自己搞定；到了夜里，你会打开那个从来不卸载的星座 App，看一句“最近会有转机”。你不是迷信，你只是白天太累了，夜里想有个人告诉你“会好的”，哪怕这个人是算法。"
+  },
+  apply: {
+    name: "玄学应用型",
+    tag: "出门看黄历，跳槽看流年。",
+    desc: "你是把玄学当工具在用的人：签约挑日子、搬家看方位、换工作先算一卦。你不是盲目相信，你是“万一有用呢”——反正成本很低，而它能让你在做决定前，多一层心理保险。你其实很清楚，真正让事情成的是你的执行力。"
+  }
+};
+
+const DIMS = { trust: "玄学信任", intuition: "直觉强度", ritual: "转运执念", stubborn: "嘴硬程度" };
+
+const QUESTIONS = [
+  {
+    q: "最近一次“玄学应验”是什么时候？",
+    o: [
+      { t: "随手许的愿，居然成了", s: { lucky: 2 }, d: { trust: 1 } },
+      { t: "出门必下雨，带伞就晴天", s: { retro: 2 }, d: {} },
+      { t: "抽到不好的牌，硬给它解释成好的", s: { half: 2 }, d: { stubborn: 1 } },
+      { t: "没遇到过，都是巧合", s: { skeptic: 1 }, d: { stubborn: 1 } }
+    ]
+  },
+  {
+    q: "朋友说“我帮你看看星盘”，你会？",
+    o: [
+      { t: "马上报生日和出生时间", s: { lucky: 1, apply: 1 }, d: { trust: 2 } },
+      { t: "嘴上说不用，还是看了", s: { half: 2 }, d: { stubborn: 1 } },
+      { t: "说“你开心就好”", s: { skeptic: 2 }, d: {} },
+      { t: "问能不能顺便算一下最近的财运", s: { apply: 2 }, d: { ritual: 1 } }
+    ]
+  },
+  {
+    q: "你手机里有没有这类东西？",
+    o: [
+      { t: "星座 App，还开着通知", s: { night: 2 }, d: { trust: 1 } },
+      { t: "黄历 / 吉日 / 今日宜忌", s: { apply: 2 }, d: { ritual: 2 } },
+      { t: "关注了一个转发锦鲤的号", s: { lucky: 1 }, d: {} },
+      { t: "都没有，纯路过", s: { skeptic: 2 }, d: { stubborn: 1 } }
+    ]
+  },
+  {
+    q: "凌晨两点睡不着，你在干什么？",
+    o: [
+      { t: "搜“最近是不是水逆”", s: { retro: 2 }, d: { trust: 2 } },
+      { t: "看自己的运势，顺便查对方星座", s: { night: 3 }, d: { trust: 1 } },
+      { t: "算这个月还剩几天能转运", s: { apply: 1, retro: 1 }, d: { ritual: 2 } },
+      { t: "睡觉，明天还要上班", s: { skeptic: 2 }, d: {} }
+    ]
+  },
+  {
+    q: "你抽到一支“下下签”，会？",
+    o: [
+      { t: "重抽一次，看看是不是手滑", s: { half: 2 }, d: { ritual: 1, stubborn: 1 } },
+      { t: "认真看看上面写了什么，然后放回去", s: { apply: 2 }, d: {} },
+      { t: "摆烂，反正也就这样了", s: { retro: 2 }, d: {} },
+      { t: "撕了，谁信这个", s: { skeptic: 2 }, d: { stubborn: 1 } }
+    ]
+  },
+  {
+    q: "你转发过锦鲤吗？",
+    o: [
+      { t: "转过，还认真许了愿", s: { lucky: 2 }, d: { trust: 1 } },
+      { t: "转过，但没许愿，图个乐", s: { half: 1 }, d: {} },
+      { t: "没转过，但刷到会停一下", s: { night: 1 }, d: {} },
+      { t: "从来不转，纯属心理作用", s: { skeptic: 1 }, d: { stubborn: 1 } }
+    ]
+  },
+  {
+    q: "有人问你“你信这些吗”？",
+    o: [
+      { t: "信，有些真的很准", s: { lucky: 1, apply: 1 }, d: { trust: 2 } },
+      { t: "半信，说不清楚", s: { half: 2 }, d: {} },
+      { t: "不信，但我照做", s: { apply: 2 }, d: { ritual: 1, stubborn: 1 } },
+      { t: "不信，纯属骗人", s: { skeptic: 3 }, d: { stubborn: 2 } }
+    ]
+  },
+  {
+    q: "如果现在能算一件事，你最想算？",
+    o: [
+      { t: "感情，他到底怎么想", s: { night: 2 }, d: { trust: 1 } },
+      { t: "财运，什么时候能发财", s: { apply: 1, lucky: 1 }, d: { ritual: 1 } },
+      { t: "事业，要不要跳槽", s: { apply: 2 }, d: {} },
+      { t: "我的运气什么时候能好一点", s: { retro: 3 }, d: {} }
+    ]
+  },
+  {
+    q: "出门前，你会看一眼？",
+    o: [
+      { t: "星座运势", s: { night: 2 }, d: { trust: 1 } },
+      { t: "黄历宜忌", s: { apply: 3 }, d: { ritual: 2 } },
+      { t: "天气和路况", s: { skeptic: 2 }, d: {} },
+      { t: "什么都不看，凭感觉", s: { lucky: 2 }, d: { intuition: 2 } }
+    ]
+  },
+  {
+    q: "如果算命的说“你明年会大赚”，你会？",
+    o: [
+      { t: "那太好了，我信", s: { lucky: 2 }, d: { trust: 2 } },
+      { t: "图一乐，但心里美滋滋", s: { half: 2 }, d: {} },
+      { t: "反问他到底怎么算的", s: { skeptic: 1, apply: 1 }, d: { stubborn: 1 } },
+      { t: "那我得提前准备一下", s: { apply: 2 }, d: { ritual: 1 } }
+    ]
+  }
+];
+
+
+/* ---------- 后端计数（可选，失败不影响测试） ---------- */
+const SITE_ID = "xuanxue";
+const API_BASE = ""; // 后端地址确定后填这里，留空则跳过计数
+async function reportCount(site, typeId) {
+  if (!API_BASE) return;
+  const el = document.getElementById("rsocial");
+  if (!el) return;
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 2500);
+    const r = await fetch(`${API_BASE}/api/count`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ site, type: typeId }),
+      signal: ctrl.signal,
+    });
+    clearTimeout(timer);
+    const d = await r.json();
+    if (d && d.ok && d.typeCount > 1) {
+      el.innerHTML = `已经有 <b>${d.typeCount.toLocaleString()}</b> 人和你测出一样的结果`;
+      el.style.display = "block";
+    }
+  } catch (e) {
+    /* 后端不可用时静默 */
+  }
+}
+
+const picked = [];
+const $ = (id) => document.getElementById(id);
+const show = (id) => {
+  document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
+  $(id).classList.add("active");
+  window.scrollTo(0, 0);
+};
+
+function renderQuestion() {
+  const i = picked.length;
+  const q = QUESTIONS[i];
+  $("qidx").textContent = `第 ${i + 1} / ${QUESTIONS.length} 题`;
+  const pct = Math.round((i / QUESTIONS.length) * 100);
+  $("qpct").textContent = pct + "%";
+  $("bar").style.width = pct + "%";
+  $("qnum").textContent = "Q" + (i + 1);
+  $("qtext").textContent = q.q;
+  const box = $("opts");
+  box.innerHTML = "";
+  q.o.forEach((opt, idx) => {
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.textContent = opt.t;
+    b.onclick = () => {
+      b.classList.add("picked");
+      picked.push(idx);
+      setTimeout(() => {
+        if (picked.length < QUESTIONS.length) renderQuestion();
+        else renderResult();
+      }, 170);
+    };
+    box.appendChild(b);
+  });
+}
+
+function renderResult() {
+  const score = {}, dims = {};
+  picked.forEach((idx, qi) => {
+    const opt = QUESTIONS[qi].o[idx];
+    for (const k in opt.s) score[k] = (score[k] || 0) + opt.s[k];
+    for (const k in opt.d) dims[k] = (dims[k] || 0) + opt.d[k];
+  });
+
+  let best = "lucky", bestScore = -1;
+  ["lucky", "retro", "half", "night", "apply", "skeptic"].forEach((k) => {
+    const v = score[k] || 0;
+    if (v > bestScore) { bestScore = v; best = k; }
+  });
+  const type = TYPES[best];
+  const total = Object.values(score).reduce((a, b) => a + b, 0) || 1;
+  const heat = Math.round(((score.trust || 0) * 1 + (score.ritual || 0) * 0.9 + (score.lucky || 0) * 0.5 + (score.retro || 0) * 0.4 + (score.half || 0) * 0.4) / total * 100);
+  const heatClamped = Math.max(6, Math.min(97, heat));
+
+  $("rname").textContent = type.name;
+  $("rtag").textContent = type.tag;
+  $("rdesc").textContent = type.desc;
+  $("rheat").textContent = heatClamped;
+
+  const maxDim = { trust: 9, intuition: 4, ritual: 8, stubborn: 7 };
+  $("rbars").innerHTML = "";
+  Object.keys(DIMS).forEach((k) => {
+    const v = dims[k] || 0;
+    const p = Math.max(8, Math.min(98, Math.round((v / maxDim[k]) * 100)));
+    const row = document.createElement("div");
+    row.className = "bar";
+    row.innerHTML = `<div class="row"><span>${DIMS[k]}</span><span>${p}%</span></div><div class="bg"><i style="width:0"></i></div>`;
+    $("rbars").appendChild(row);
+    requestAnimationFrame(() => setTimeout(() => { row.querySelector("i").style.width = p + "%"; }, 60));
+  });
+
+  $("bar").style.width = "100%";
+  $("qpct").textContent = "100%";
+  show("s-result");
+  window.__shareText = `我测出来是「${type.name}」——${type.tag} 你是什么？`;
+  reportCount(SITE_ID, best);
+}
+
+$("start").onclick = () => { picked.length = 0; $("bar").style.width = "0%"; renderQuestion(); show("s-quiz"); };
+$("again").onclick = () => { picked.length = 0; show("s-cover"); };
+$("share").onclick = async () => {
+  const text = window.__shareText || document.title;
+  try { await navigator.clipboard.writeText(text); toast("已复制，去发给朋友吧"); }
+  catch (e) {
+    const ta = document.createElement("textarea");
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand("copy"); ta.remove(); toast("已复制，去发给朋友吧");
+  }
+};
+let toastTimer;
+function toast(msg) {
+  const t = $("toast"); t.textContent = msg; t.classList.add("on");
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("on"), 1600);
+}
+</script>
+</body>
+</html>
