@@ -252,7 +252,7 @@ const QUESTIONS = [
 
 /* ---------- 后端计数（可选，失败不影响测试） ---------- */
 const SITE_ID = "xuanxue";
-const API_BASE = ""; // 后端地址确定后填这里，留空则跳过计数
+const API_BASE = "https://quiz-api-pages.pages.dev"; // Cloudflare Pages Functions 后端
 async function reportCount(site, typeId) {
   if (!API_BASE) return;
   const el = document.getElementById("rsocial");
